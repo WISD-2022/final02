@@ -19,8 +19,8 @@ return new class extends Migration
             $table->integer('introduce');
             $table->integer('people');
             $table->integer('amount');
-            $table->unsignedbigInteger('order_id');
-            $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade')->onUpdate('cascade');
+           $table->unsignedbigInteger('order_id');
+           $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }
