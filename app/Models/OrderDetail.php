@@ -9,6 +9,16 @@ class OrderDetail extends Model
 {
     use HasFactory;
 
+    public function order()
+    {
+        return $this->belongsTo(Order::class);
+    }
+
+    public function room()
+    {
+        return $this->belongsTo(Room::class);
+    }
+
     protected $fillable = [
         'room_id',
         'order_id',
