@@ -8,14 +8,14 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
                 <div class="input-group">
-                    <input class="form-control" type="text" placeholder="Search for..." aria-label="Search for..."
+                    <input class="form-control" type="text" placeholder="搜尋房間" aria-label="Search for..."
                            aria-describedby="btnNavbarSearch"/>
                     <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i class="fas fa-search"></i></button>
                 </div>
             </form>
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                <li class="nav-item"><a class="nav-link{{ (request()->is('login'))? " active" : "" }}" aria-current="page" href="{{ route('login') }}">Log in</a></li>
-                <li class="nav-item"><a class="nav-link{{ (request()->is('register'))? " active" : "" }}" aria-current="page" href="{{ route('register') }}">Register</a></li>
+                <li class="nav-item"><a class="nav-link{{ (request()->is('login'))? " active" : "" }}" aria-current="page" href="{{ route('login') }}">登入</a></li>
+                <li class="nav-item"><a class="nav-link{{ (request()->is('register'))? " active" : "" }}" aria-current="page" href="{{ route('register') }}">註冊</a></li>
             </ul>
         </div>
     </div>
