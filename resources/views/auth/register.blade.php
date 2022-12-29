@@ -29,6 +29,16 @@
                 <x-jet-input id="password_confirmation" class="block mt-1 w-full" type="password" name="password_confirmation" required autocomplete="new-password" />
             </div>
 
+            <div class="mt-4">
+                <x-jet-label for="phone" value="{{ __('Phone') }}" />
+                <x-jet-input id="phone" class="block mt-1 w-full" type="text" name="phone"/>
+            </div>
+
+            <div class="mt-4">
+                <x-jet-label for="account" value="{{ __('Account') }}" />
+                <x-jet-input id="account" class="block mt-1 w-full" type="text" name="account"/>
+            </div>
+
             @if (Laravel\Jetstream\Jetstream::hasTermsAndPrivacyPolicyFeature())
                 <div class="mt-4">
                     <x-jet-label for="terms">

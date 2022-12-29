@@ -15,7 +15,7 @@ class OrderController extends Controller
      */
     public function index()
     {
-        //
+        return view('orders.index');
     }
 
     /**
@@ -25,7 +25,7 @@ class OrderController extends Controller
      */
     public function create()
     {
-        //
+        return view('orders.create');
     }
 
     /**
@@ -36,7 +36,9 @@ class OrderController extends Controller
      */
     public function store(StoreOrderRequest $request)
     {
-        //
+        //需考慮 OrderDetailController.php
+        /*Order::create($request->all());
+        return redirect()->route('orders.index');*/
     }
 
     /**
@@ -58,7 +60,10 @@ class OrderController extends Controller
      */
     public function edit(Order $order)
     {
-        //
+        /*$data = [
+            'order'=>$order,
+        ];
+        return view('orders.edit', $data);*/
     }
 
     /**
@@ -70,7 +75,8 @@ class OrderController extends Controller
      */
     public function update(UpdateOrderRequest $request, Order $order)
     {
-        //
+        /*$order->update($request->all());
+        return redirect()->route('orders.index');*/
     }
 
     /**
@@ -81,6 +87,7 @@ class OrderController extends Controller
      */
     public function destroy(Order $order)
     {
-        //
+        /*$order->delete();
+        return redirect()->route('orders.index');*/
     }
 }

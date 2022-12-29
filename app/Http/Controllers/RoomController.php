@@ -16,7 +16,7 @@ class RoomController extends Controller
      */
     public function index()
     {
-        //
+        return view('rooms.index');
     }
 
     /**
@@ -26,7 +26,7 @@ class RoomController extends Controller
      */
     public function create()
     {
-        //
+        return view('orders.create');
     }
 
     /**
@@ -37,7 +37,9 @@ class RoomController extends Controller
      */
     public function store(StoreRoomRequest $request)
     {
-        //
+        //需考慮 ImageController.php
+        /*Room::create($request->all());
+        return redirect()->route('rooms.index');*/
     }
 
 
@@ -66,7 +68,10 @@ class RoomController extends Controller
      */
     public function edit(Room $room)
     {
-        //
+        /*$data = [
+            'room'=>$room,
+        ];
+        return view('rooms.edit', $data);*/
     }
 
     /**
@@ -78,7 +83,8 @@ class RoomController extends Controller
      */
     public function update(UpdateRoomRequest $request, Room $room)
     {
-        //
+        /*$room->update($request->all());
+        return redirect()->route('rooms.index');*/
     }
 
     /**
@@ -89,6 +95,7 @@ class RoomController extends Controller
      */
     public function destroy(Room $room)
     {
-        //
+        /*$room->delete();
+        return redirect()->route('rooms.index');*/
     }
 }
