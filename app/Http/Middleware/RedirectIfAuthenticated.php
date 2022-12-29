@@ -22,11 +22,15 @@ class RedirectIfAuthenticated
         $guards = empty($guards) ? [null] : $guards;
 
         foreach ($guards as $guard) {
-            if (Auth::guard($guard)->check()) {
-                return redirect(RouteServiceProvider::HOME);
+            //登入頁面跳轉驗證身分
+            if (!Auth::guard($guard)->guest()) {
+                if(Auth::guard($guard)->user()->ismember == '0'){
+                    return redirect('/rooms');
+                }else if(Auth::guard($guard)->user()->ismember == '1'){
+                    return redirect('/');
+                }
             }
         }
-
         return $next($request);
     }
 }

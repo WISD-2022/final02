@@ -34,13 +34,15 @@ Route::group(['middleware' => config('fortify.middleware', ['web'])], function (
     $twoFactorLimiter = config('fortify.limiters.two-factor');
     $verificationLimiter = config('fortify.limiters.verification', '6,1');
 
+    //登入路由
     Route::post('/login', [AuthenticatedSessionController::class, 'store'])
         ->middleware(array_filter([
             'guest:'.config('fortify.guard'),
             $limiter ? 'throttle:'.$limiter : null,
         ]));
 
-    Route::delete('/logout', [AuthenticatedSessionController::class, 'destroy'])
+    //登出路由
+    Route::get('/logout', [AuthenticatedSessionController::class, 'destroy'])
         ->name('logout');
 
     // Password Reset...
@@ -65,6 +67,7 @@ Route::group(['middleware' => config('fortify.middleware', ['web'])], function (
     }
 
     // Registration...
+    //註冊路由
     if (Features::enabled(Features::registration())) {
         if ($enableViews) {
             Route::get('/register', [RegisteredUserController::class, 'create'])

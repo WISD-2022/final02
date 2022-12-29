@@ -9,6 +9,8 @@ class Room extends Model
 {
     use HasFactory;
 
+    public mixed $id;
+
     public function order()
     {
         return $this->belongsTo(Order::class);
@@ -25,6 +27,7 @@ class Room extends Model
     }
 
     protected $fillable = [
+        'id',
         'shelf_status',
         'introduce',
         'people',

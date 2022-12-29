@@ -6,6 +6,7 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Contracts\Auth\StatefulGuard;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Auth;
 use Laravel\Fortify\Contracts\CreatesNewUsers;
 use Laravel\Fortify\Contracts\RegisterResponse;
 use Laravel\Fortify\Contracts\RegisterViewResponse;
@@ -49,12 +50,22 @@ class RegisteredUserController extends Controller
      * @return \Laravel\Fortify\Contracts\RegisterResponse
      */
     public function store(Request $request,
-                          CreatesNewUsers $creator): RegisterResponse
+                          CreatesNewUsers $creator, ...$guards)//: RegisterResponse
     {
         event(new Registered($user = $creator->create($request->all())));
+        $guards = empty($guards) ? [null] : $guards;
 
         $this->guard->login($user);
-
-        return app(RegisterResponse::class);
+        foreach ($guards as $guard) {
+            //註冊頁面跳轉驗證身分
+            if (!Auth::guard($guard)->guest()) {
+                if(Auth::guard($guard)->user()->ismember == '0'){
+                    return redirect('/rooms');
+                }else if(Auth::guard($guard)->user()->ismember == '1'){
+                    return redirect('/');
+                }
+            }
+        }
+        //return app(RegisterResponse::class);
     }
 }

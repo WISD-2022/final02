@@ -39,6 +39,14 @@
                 <x-jet-input id="account" class="block mt-1 w-full" type="text" name="account"/>
             </div>
 
+            <div class="mt-4">
+                <x-jet-label for="ismember" value="{{ __('IsMember') }}" />
+                <select name="ismember" id="ismember" class="form-select rounded-md shadow-sm mt-1 block w-full">
+                    <option value="1">是</option>
+                    <option value="0">否</option>
+                </select>
+            </div>
+
             @if (Laravel\Jetstream\Jetstream::hasTermsAndPrivacyPolicyFeature())
                 <div class="mt-4">
                     <x-jet-label for="terms">

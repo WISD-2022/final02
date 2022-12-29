@@ -363,6 +363,7 @@ class TestResponse implements ArrayAccess
      */
     public function assertLocation($uri)
     {
+        dd('aaa');
         PHPUnit::assertEquals(
             app('url')->to($uri), app('url')->to($this->headers->get('Location'))
         );

@@ -14,8 +14,12 @@
                 </div>
             </form>
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                <li class="nav-item"><a class="nav-link{{ (request()->is('login'))? " active" : "" }}" aria-current="page" href="{{ route('login') }}">登入</a></li>
-                <li class="nav-item"><a class="nav-link{{ (request()->is('register'))? " active" : "" }}" aria-current="page" href="{{ route('register') }}">註冊</a></li>
+                @if (Auth::guest())<!--未登入-->
+                    <li class="nav-item"><a class="nav-link{{ (request()->is('login'))? " active" : "" }}" aria-current="page" href="{{ route('login') }}">登入</a></li>
+                    <li class="nav-item"><a class="nav-link{{ (request()->is('register'))? " active" : "" }}" aria-current="page" href="{{ route('register') }}">註冊</a></li>
+                @else
+                    <li class="nav-item"><a class="nav-link" aria-current="page" href="{{ route('logout') }}">登出</a></li>
+                @endif
             </ul>
         </div>
     </div>

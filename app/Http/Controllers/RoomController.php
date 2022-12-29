@@ -6,6 +6,7 @@ use App\Models\Room;
 use App\Http\Requests\StoreRoomRequest;
 use App\Http\Requests\UpdateRoomRequest;
 use App\Http\Requests\SearchRoomRequest;
+use Illuminate\Support\Facades\Auth;
 
 class RoomController extends Controller
 {
@@ -16,7 +17,11 @@ class RoomController extends Controller
      */
     public function index()
     {
-        return view('rooms.index');
+        if(Auth::user()->ismember == '0'){
+            return view('rooms.index');
+        }else if(Auth::user()->ismember == '1'){
+            return redirect('/');
+        }
     }
 
     /**
@@ -26,7 +31,7 @@ class RoomController extends Controller
      */
     public function create()
     {
-        return view('orders.create');
+        return view('rooms.create');
     }
 
     /**
@@ -38,8 +43,12 @@ class RoomController extends Controller
     public function store(StoreRoomRequest $request)
     {
         //需考慮 ImageController.php
-        /*Room::create($request->all());
-        return redirect()->route('rooms.index');*/
+        //Room::create($request->all());
+        /*return redirect()->route('rooms.index');*/
+        $room = new Room;
+        $room->id = $request->id;
+        $room->save();
+        return redirect()->route('rooms.index');
     }
 
 
