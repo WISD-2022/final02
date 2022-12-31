@@ -10,6 +10,7 @@ class Room extends Model
     use HasFactory;
 
     public mixed $id;
+    protected $table = 'rooms';
 
     public function order()
     {
@@ -27,6 +28,7 @@ class Room extends Model
     }
 
     protected $fillable = [
+        'image',
         'id',
         'shelf_status',
         'introduce',

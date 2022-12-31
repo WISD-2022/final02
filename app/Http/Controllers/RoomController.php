@@ -3,10 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Room;
+use App\Models\Image;
+use Illuminate\Http\Request;
 use App\Http\Requests\StoreRoomRequest;
 use App\Http\Requests\UpdateRoomRequest;
 use App\Http\Requests\SearchRoomRequest;
+use Hamcrest\InvokedMatcherTest;
 use Illuminate\Support\Facades\Auth;
+//use Illuminate\Support\Facades\Validator;
 
 class RoomController extends Controller
 {
@@ -18,7 +22,13 @@ class RoomController extends Controller
     public function index()
     {
         if(Auth::user()->ismember == '0'){
-            return view('rooms.index');
+//            $rooms = Room::all();
+//            $data = ['rooms' => $rooms];
+            $rooms = Room::orderBy('created_at', 'DESC')->get();
+            $data = [
+                'id' => $rooms->id
+            ];
+            return view('rooms.index', $data);//, $data);
         }else if(Auth::user()->ismember == '1'){
             return redirect('/');
         }
@@ -42,13 +52,42 @@ class RoomController extends Controller
      */
     public function store(StoreRoomRequest $request)
     {
-        //需考慮 ImageController.php
-        //Room::create($request->all());
-        /*return redirect()->route('rooms.index');*/
-        $room = new Room;
-        $room->id = $request->id;
-        $room->save();
-        return redirect()->route('rooms.index');
+//        $this->validate($request, [
+//            'image' => 'required|image',
+//        ]);
+    //        Validator::make($request->all(), [
+    //            'image' => 'required|image',
+    //        ])->validate();
+        Room::create([
+            'id'=>$request->id,
+            'introduce'=>$request->introduce,
+            'shelf_status'=>$request->shelf_status,
+            'people'=>$request->people,
+            'amount'=>$request->amount,
+        ]);
+        if($request->has('image')) {
+            //影像圖檔-自訂檔案名稱
+            $imageName = $request->id.'_'.time().'.'.$request->image->extension();
+            //把檔案存到公開的資料夾
+            $file_path = $request->image->move(public_path('images'), $imageName);
+            Image::create([
+                'id'=>'201',
+                'image'=>$file_path,
+                'room_id'=>$request->id,
+            ]);
+        }
+
+
+//        $room = image()->attach($image->id,['id'=>$id]);
+
+//        Room::create($request->all());
+
+//        $room->setting()->create();
+//        $room = new Room;
+//        $room->id = $request->id;
+//        $room->save();
+        return redirect()->route('rooms.index')->with('alert', '新增房間成功!');
+//        return redirect('rooms');
     }
 
 
@@ -104,7 +143,7 @@ class RoomController extends Controller
      */
     public function destroy(Room $room)
     {
-        /*$room->delete();
-        return redirect()->route('rooms.index');*/
+        $room->delete();
+        return redirect()->route('rooms.index');
     }
 }
