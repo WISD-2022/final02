@@ -16,7 +16,7 @@ class Order extends Model
 
     public function room()
     {
-        return $this->hasMany(Room::class);
+        return $this->belongsToMany(Room::class,'order_details')->withTimestamps();
     }
 
     public function orderdetail()
@@ -25,6 +25,7 @@ class Order extends Model
     }
 
     protected $fillable = [
+        'room_id',
         'start_date',
         'end_date',
         'user_id',

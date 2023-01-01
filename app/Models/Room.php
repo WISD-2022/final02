@@ -12,14 +12,14 @@ class Room extends Model
     //public mixed $id;
     protected $table = 'rooms';
 
-    public function order()
+    public function user()
     {
-        return $this->belongsTo(Order::class);
+        return $this->belongsToMany(Order::class,'orders');
     }
 
-    public function orderdetail()
+    public function order()
     {
-        return $this->hasMany(OrderDetail::class);
+        return $this->belongsToMany(Order::class,'order_details')->withTimestamps();
     }
 
     public function images()

@@ -35,7 +35,16 @@
         <div class="row gx-lg-5">
             <div class="col-lg-1 col-xxl-1 mb-5">{{$room->id}}</div>
             <div class="col-lg-4 col-xxl-4 mb-5">{{$room->introduce}}</div>
-            <div class="col-lg-2 col-xxl-2 mb-5">{{($room->shelf_status)? '開放訂購' : '整理中'}}</div>
+{{--            <div class="col-lg-2 col-xxl-2 mb-5">{{($room->shelf_status)? '開放訂購' : '整理中'}}</div>--}}
+            <div class="col-lg-2 col-xxl-2 mb-5">
+                @if($room->shelf_status==0)
+                    整理中
+                @elseif($room->shelf_status==1)
+                    開放訂購
+                @elseif($room->shelf_status==2)
+                    已被訂購
+                @endif
+            </div>
             <div class="col-lg-2 col-xxl-2 mb-5">{{ $room->people }}</div>
             <div class="col-lg-1 col-xxl-1 mb-5">{{ $room->amount }}</div>
             <div class="col-lg-2 col-xxl-2 mb-5">

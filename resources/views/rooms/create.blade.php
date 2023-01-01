@@ -14,11 +14,12 @@
         <!--只接受影像圖檔-->
 
         <div class="text-right"><div class="mb-2">
+            <div class="form-group">
                 <input type="file" name="image" accept="image/*">
             </div>
             <div class="form-group">
                 <label for="id" class="form-label">房號：</label>
-                <input id="id" name="id" class="form-control" value="" placeholder="請輸入文章房號">
+                <input id="id" name="id" class="form-control" value="" placeholder="請輸入房號">
             </div>
             <div class="form-group">
                 <label for="introduce" class="form-label">介紹：</label>
@@ -29,6 +30,7 @@
                 <select id="shelf_status" name="shelf_status" class="form-control">
                     <option value="0">整理中</option>
                     <option value="1">開放訂購</option>
+                    <option value="2">已被訂購</option>
                 </select>
             </div>
             <div class="form-group">
@@ -45,7 +47,7 @@
                 <input id="amount" name="amount" class="form-control" value="{{$account}}" placeholder="" disabled>
             </div>
             <button class="btn btn-primary btn-sm" type="submit">儲存</button>
-        </div>
+        </div></div>
     </form>
 </div>
 @endsection

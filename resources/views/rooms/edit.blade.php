@@ -1,6 +1,14 @@
 @extends('rooms.layouts.master')
 
 @section('page-title', '編輯房間')
+{{--跳出視窗--}}
+<script>
+    var msg = '{{Session::get('alert')}}';
+    var exist = '{{Session::has('alert')}}';
+    if(exist){
+        alert(msg);
+    }
+</script>
 
 @section('page-content')
 <div class="container-fluid px-4">
@@ -13,8 +21,10 @@
         @method('PATCH')
         @csrf
         <div class="mb-2">
+            @if($images[0]->image != '')
+                <img src="{{ asset('images/'.$images[0]->image) }}" height="200px" width="300px" alt="一張圖片">
+            @endif
             <input type="file" name="image" accept="image/*">
-            <img src="{{ asset('images/'.$images[0]->image) }}" alt="一張圖片">
         </div>
         <div class="form-group">
             <label for="id" class="form-label">房號：</label>
@@ -26,10 +36,35 @@
         </div>
         <div class="form-group">
             <label for="shelf_status" class="form-label">上架狀態？</label>
+{{--            <select id="shelf_status" name="shelf_status" class="form-control" style="text-align: center">--}}
+{{--                @if($room->shelf_status==0)--}}
+{{--                    <option value="0">整理中</option>--}}
+{{--                @elseif($room->shelf_status==1)--}}
+{{--                    <option value="1">開放訂購</option>--}}
+{{--                @elseif($room->shelf_status==2)--}}
+{{--                    <option value="2">已被訂購</option>--}}
+{{--                @endif--}}
+{{--            </select>--}}
             <select id="shelf_status" name="shelf_status" class="form-control">
-                <option value="0" {{(!$room->shelf_status)? 'selected':''}}>整理中</option>
-                <option value="1" {{($room->shelf_status)? 'selected':''}}>開放訂購</option>
+                @if($room->shelf_status==0)
+                    <option value="0" selected>整理中</option>
+                    <option value="1">開放訂購</option>
+                    <option value="2">已被訂購</option>
+                @elseif($room->shelf_status==1)
+                    <option value="0">整理中</option>
+                    <option value="1" selected>開放訂購</option>
+                    <option value="2">已被訂購</option>
+                @elseif($room->shelf_status==2)
+                    <option value="0">整理中</option>
+                    <option value="1">開放訂購</option>
+                    <option value="2" selected>已被訂購</option>
+                @endif
             </select>
+{{--            <select id="shelf_status" name="shelf_status" class="form-control">--}}
+{{--                <option value="0" {{(!$room->shelf_status)? 'selected':''}}>整理中</option>--}}
+{{--                <option value="1" {{($room->shelf_status)? 'selected':''}}>開放訂購</option>--}}
+{{--                <option value="2" {{($room->shelf_status)? 'selected':''}}>已被訂購</option>--}}
+{{--            </select>--}}
         </div>
         <div class="form-group">
             <label for="people" class="form-label">可住人數：</label>

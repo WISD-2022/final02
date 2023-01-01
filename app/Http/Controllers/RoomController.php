@@ -161,7 +161,7 @@ class RoomController extends Controller
         $room->update($data);
 
 //        Room::whereId($room)->update($validatedData);
-        return redirect()->route('rooms.index');
+        return redirect()->route('rooms.index')->with('alert', '更新房間成功!');
     }
 
     /**

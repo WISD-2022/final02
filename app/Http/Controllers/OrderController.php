@@ -1,13 +1,16 @@
 <?php
 
 namespace App\Http\Controllers;
+use Carbon\Carbon;
 
 use App\Models\Image;
 use App\Models\Order;
+use Illuminate\Http\Request;
 use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
 use App\Models\OrderDetail;
 use App\Models\Room;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
@@ -27,9 +30,17 @@ class OrderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($room_id)
     {
-        return view('orders.create');
+        $rooms = Room::find($room_id);
+        $images = Image::where('room_id', $room_id)->get();
+        $account = User::find(22)->account;
+        $data = [
+            'rooms'=>$rooms,
+            'images'=>$images,
+            'account'=>$account
+        ];
+        return view('orders.create', $data);
     }
 
     /**
@@ -38,23 +49,56 @@ class OrderController extends Controller
      * @param  \App\Http\Requests\StoreOrderRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Room $room, StoreOrderRequest $request)
+    public function store(StoreOrderRequest $request)
     {
         //需考慮 OrderDetailController.php
         /*Order::create($request->all());
         return redirect()->route('orders.index');*/
-        Order::create([
-            'start_date'=>$request->start_date,
-            'end_date'=>$request->end_date,
-            'user_id'=>Auth::user()->account,
-        ]);
-        $rooms = Room::orderBy('created_at', 'DESC')->get();
-        if($request->has('image')) {
-            OrderDetail::create([
-                'order_id'=>$rooms->id,
-                'room_id'=>$room,
+        /*方案1
+        and (
+            (start_date >= $request->start_date and start_date <= $request->end_date)
+            or
+            (end_date >= $request->start_date and end_date <= $request->end_date)
+        )
+        方案2
+        and (
+            (Between start_date $request->start_date and $request->end_date)
+            or
+            (Between end_date $request->start_date and $request->end_date)
+            or
+            (start_date <= $request->start_date and end_date >= $request->end_date)
+        )*/
+        $check = Order::where('room_id',$request->room_id)
+            ->where(function ($query) use ($request){
+                $query->whereBetween('start_date', [$request->start_date, $request->end_date])
+                    ->orwhereBetween('end_date', [$request->start_date, $request->end_date])
+                    ->orwhereRaw('start_date <= '.$request->start_date.' and end_date >= '.$request->end_date);
+            })->get();
+        if(count($check) > 0){
+            return redirect()->route('home.index')->with('alert', '已被訂購!');
+        }else{
+            $rooms = Room::find($request->room_id);
+            $od = Order::create([
+                'room_id'=>$request->room_id,
+                'start_date'=>$request->start_date,
+                'end_date'=>$request->end_date,
+                'user_id'=>Auth::user()->id,
             ]);
         }
+        return redirect()->route('home.index')->with('alert', '訂購成功!');
+//
+//        OrderDetail::create([
+//            'order_id'=>$request->start_date,
+//            'end_date'=>$request->end_date,
+//            'user_id'=>Auth::user()->id,
+//        ]);
+//        $rooms = Room::orderBy('created_at', 'DESC')->get();
+//        if($request->has('image')) {
+//            OrderDetail::create([
+//                'order_id'=>$rooms->id,
+//                'room_id'=>$room,
+//            ]);
+//        }
     }
 
     /**
