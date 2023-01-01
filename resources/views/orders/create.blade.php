@@ -29,6 +29,40 @@
         <div class="text-right">
             <button class="btn btn-primary btn-sm" type="submit">儲存</button>
         </div>
+
+        <div class="text-right"><div class="mb-2">
+                <input type="file" name="image" accept="image/*" value="{{'image', old($room->image)}}">
+            </div>
+            <div class="form-group">
+                <label for="id" class="form-label">房號：</label>
+                <input id="id" name="id" class="form-control" value="{{old($room->id)}}" placeholder="" disabled>
+            </div>
+            <div class="form-group">
+                <label for="introduce" class="form-label">介紹：</label>
+                <textarea id="introduce" name="introduce" class="form-control" rows="10" disabled>{{old($room->introduce)}}</textarea>
+            </div>
+            <div class="form-group">
+                <label for="shelf_status" class="form-label">上架狀態？</label>
+                <select id="shelf_status" name="shelf_status" class="form-control" disabled>
+                    <option value="0" {{(!$room->shelf_status)? 'selected':''}}>整理中</option>
+                    <option value="1" {{($room->shelf_status)? 'selected':''}}>開放訂購</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="people" class="form-label">可住人數：</label>
+                <input id="people" name="people" class="form-control" value="{{old($room->people)}}" placeholder="" disabled>
+            </div>
+            <div class="form-group">
+                <label for="amount" class="form-label">金額：</label>
+                <input id="amount" name="amount" class="form-control" value="{{old($room->id)}}" placeholder="" disabled>
+            </div>
+            <div class="form-group">
+                <label for="amount" class="form-label">應付款帳戶：</label>
+
+                <input id="amount" name="amount" class="form-control" value="{{old($room->account}}" placeholder="" disabled>
+            </div>
+            <button class="btn btn-primary btn-sm" type="submit">儲存</button>
+        </div>
     </form>
 </div>
 @endsection

@@ -19,44 +19,42 @@
     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
         <a class="btn btn-success btn-sm" href="{{ route('rooms.create') }}">新增</a>
     </div>
+    <section class="pt-4">
+        <div class="container px-lg-5">
+            <div class="row gx-lg-5">
+                <div class="col-lg-1 col-xxl-1 mb-5">房號</div>
+                <div class="col-lg-4 col-xxl-4 mb-5">介紹</div>
+                <div class="col-lg-2 col-xxl-2 mb-5">上架狀態</div>
+                <div class="col-lg-2 col-xxl-2 mb-5">可住人數</div>
+                <div class="col-lg-1 col-xxl-1 mb-5">金額</div>
+                <div class="col-lg-2 col-xxl-2 mb-5">操作</div>
+            </div>
 
-    <!-- Main Content -->
-    @foreach($rooms as $room)
-{{--        <form action="{{route('rooms.destroy', $rooms->id)}}" method="POST" style="display: inline-block">--}}
-{{--            --}}{{--                        @method('DELETE')--}}
-{{--            --}}{{--                        @csrf--}}
-{{--            {{method_field('DELETE')}}--}}
-{{--            {{csrf_field()}}--}}
-{{--            <button class="btn btn-sm btn-danger" type="submit">刪除203</button>--}}
-{{--        </form>--}}
-
-{{--        {{$room->id}}--}}
-{{--        <tr>--}}
-{{--            <td style="text-align: right">{{$room->id}}</td>--}}
-{{--            <td>{{$room->introduce}}</td>--}}
-{{--            <td style="text-align: right">{{($room->shelf_status)? '開放訂購' : '整理中'}}</td>--}}
-{{--            <td>--}}
-{{--                <a class="btn btn-sm btn-primary" href="{{ route('rooms.edit', $room->id) }}">編輯</a>--}}
+        <!-- Main Content -->
+        @foreach($rooms as $key => $room)
+        <div class="row gx-lg-5">
+            <div class="col-lg-1 col-xxl-1 mb-5">{{$room->id}}</div>
+            <div class="col-lg-4 col-xxl-4 mb-5">{{$room->introduce}}</div>
+            <div class="col-lg-2 col-xxl-2 mb-5">{{($room->shelf_status)? '開放訂購' : '整理中'}}</div>
+            <div class="col-lg-2 col-xxl-2 mb-5">{{ $room->people }}</div>
+            <div class="col-lg-1 col-xxl-1 mb-5">{{ $room->amount }}</div>
+            <div class="col-lg-2 col-xxl-2 mb-5">
+                <a class="btn btn-sm btn-primary" href="{{ route('rooms.edit', $room->id) }}">編輯</a>
 {{--                <a href="{{ route('rooms.edit', $room->id) }}">編輯</a>--}}
-{{--                /--}}
-{{--                <form action="{{route('rooms.destroy', $room->id)}}" method="POST" style="display: inline-block">--}}
-{{--                    @method('DELETE')--}}
-{{--                    @csrf--}}
-{{--                    {{method_field('DELETE')}}--}}
-{{--                    {{csrf_field()}}--}}
-{{--                    <button class="btn btn-sm btn-danger" type="submit">刪除</button>--}}
-{{--                </form>--}}
+                /
+                <form action="{{route('rooms.destroy', $room->id)}}" method="POST" style="display: inline-block">
+                    @method('DELETE')
+                    @csrf
+                    {{method_field('DELETE')}}
+                    {{csrf_field()}}
+                    <button class="btn btn-sm btn-danger" type="submit">刪除</button>
+                </form>
 {{--                <a href="#">刪除</a>--}}
-{{--            </td>--}}
-{{--            <th scope="row" style="width: 50px">{{ $id }}</th>--}}
-{{--            <td>{{ '標題' . $id }}</td>--}}
-{{--            <td style="width: 150px">--}}
-{{--                <button type="button" class="btn btn-primary btn-sm">編輯</button>--}}
-{{--                <button type="button" class="btn btn-danger btn-sm">刪除</button>--}}
-{{--            </td>--}}
-{{--        </tr>--}}
+            </div>
+        </div>
         @endforeach
-
+        </div>
+    </section>
 {{--    <section class="pt-4">--}}
 {{--        <div class="container px-lg-5">--}}
 {{--            <!-- Page Features-->--}}

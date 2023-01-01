@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Image;
 use App\Models\Order;
 use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
+use App\Models\OrderDetail;
+use App\Models\Room;
+use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
@@ -34,11 +38,23 @@ class OrderController extends Controller
      * @param  \App\Http\Requests\StoreOrderRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreOrderRequest $request)
+    public function store(Room $room, StoreOrderRequest $request)
     {
         //需考慮 OrderDetailController.php
         /*Order::create($request->all());
         return redirect()->route('orders.index');*/
+        Order::create([
+            'start_date'=>$request->start_date,
+            'end_date'=>$request->end_date,
+            'user_id'=>Auth::user()->account,
+        ]);
+        $rooms = Room::orderBy('created_at', 'DESC')->get();
+        if($request->has('image')) {
+            OrderDetail::create([
+                'order_id'=>$rooms->id,
+                'room_id'=>$room,
+            ]);
+        }
     }
 
     /**

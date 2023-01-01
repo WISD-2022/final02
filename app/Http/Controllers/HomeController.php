@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Room;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -15,7 +16,11 @@ class HomeController extends Controller
             }else if(Auth::user()->ismember == '1'){
                 return redirect('/');
             }*/
-            return view('home.index');
+            $rooms = Room::all();
+            $data = [
+                'rooms' => $rooms
+            ];
+            return view('home.index', $data);
         }else{
             return redirect('/login');
         }

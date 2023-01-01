@@ -11,9 +11,19 @@ use App\Http\Requests\SearchRoomRequest;
 use Hamcrest\InvokedMatcherTest;
 use Illuminate\Support\Facades\Auth;
 //use Illuminate\Support\Facades\Validator;
+use Illuminate\Database\Eloquent\Collection;
+use App\Repositories\RoomRepository;
+
 
 class RoomController extends Controller
 {
+    protected $roomRepo;
+
+    public function __construct(RoomRepository $roomRepo)
+    {
+        $this->roomRepo = $roomRepo;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -24,9 +34,12 @@ class RoomController extends Controller
         if(Auth::user()->ismember == '0'){
 //            $rooms = Room::all();
 //            $data = ['rooms' => $rooms];
-            $rooms = Room::orderBy('created_at', 'DESC')->get();
+//            $rooms = Room::all();
+//            $this->room = new Room(); //initializes it
+//            return view('rooms.index', compact('rooms'));
+            $rooms = $this->roomRepo->index();
             $data = [
-                'id' => $rooms->id
+                'rooms' => $rooms
             ];
             return view('rooms.index', $data);//, $data);
         }else if(Auth::user()->ismember == '1'){
@@ -41,7 +54,8 @@ class RoomController extends Controller
      */
     public function create()
     {
-        return view('rooms.create');
+        $account = Auth::user()->account;
+        return view('rooms.create', compact('account'));
     }
 
     /**
@@ -71,8 +85,7 @@ class RoomController extends Controller
             //把檔案存到公開的資料夾
             $file_path = $request->image->move(public_path('images'), $imageName);
             Image::create([
-                'id'=>'201',
-                'image'=>$file_path,
+                'image'=>$imageName,
                 'room_id'=>$request->id,
             ]);
         }
@@ -116,10 +129,15 @@ class RoomController extends Controller
      */
     public function edit(Room $room)
     {
-        /*$data = [
+        $images = Image::where('room_id', $room->id)->get();
+        $account = Auth::user()->account;
+
+        $data = [
             'room'=>$room,
+            'images'=>$images,
+            'account'=>$account
         ];
-        return view('rooms.edit', $data);*/
+        return view('rooms.edit', $data);
     }
 
     /**
@@ -129,10 +147,21 @@ class RoomController extends Controller
      * @param  \App\Models\Room  $room
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateRoomRequest $request, Room $room)
+    public function update(Room $room, UpdateRoomRequest $request)
     {
-        /*$room->update($request->all());
-        return redirect()->route('rooms.index');*/
+        if($request->has('image')) {
+            //影像圖檔-自訂檔案名稱
+            $imageName = $room->id.'_'.time().'.'.$request->image->extension();
+            //把檔案存到公開的資料夾
+            $file_path = $request->image->move(public_path('images'), $imageName);
+            Image::where('room_id',$room->id)->update(['image'=>$imageName]);
+        }
+        $data = $request->all();
+        unset($data['image']);
+        $room->update($data);
+
+//        Room::whereId($room)->update($validatedData);
+        return redirect()->route('rooms.index');
     }
 
     /**
@@ -143,6 +172,7 @@ class RoomController extends Controller
      */
     public function destroy(Room $room)
     {
+        Image::where('room_id',$room->id)->delete();
         $room->delete();
         return redirect()->route('rooms.index');
     }

@@ -9,7 +9,7 @@ class Room extends Model
 {
     use HasFactory;
 
-    public mixed $id;
+    //public mixed $id;
     protected $table = 'rooms';
 
     public function order()
@@ -22,7 +22,7 @@ class Room extends Model
         return $this->hasMany(OrderDetail::class);
     }
 
-    public function image()
+    public function images()
     {
         return $this->hasMany(Image::class);
     }
