@@ -22,7 +22,12 @@ class OrderController extends Controller
      */
     public function index()
     {
-        return view('orders.index');
+        $orders = Order::all();
+        $data = [
+            'order_date'=>$orders,
+            'user_id'=>Auth::user()->email
+        ];
+        return view('orders.index',$data);
     }
 
     /**
@@ -149,7 +154,7 @@ class OrderController extends Controller
      */
     public function destroy(Order $order)
     {
-        /*$order->delete();
-        return redirect()->route('orders.index');*/
+        $order->delete();
+        return redirect()->route('orders.index');
     }
 }
