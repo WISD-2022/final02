@@ -50,9 +50,15 @@
                             </p>
 {{--                            <p class="mb-0">目前狀態：{{($room->shelf_status)? '開放訂購' : '整理中'}}</p>--}}
 {{--                            <a class="btn btn-success btn-sm" href="{{ route('orders.show') }}">詳細資訊</a>--}}
-                            @if($room->shelf_status==1)
-                                <a class="btn btn-success btn-sm" href="orders/create/{{$room->id}}">加入訂單</a>
-                            @endif
+
+
+                             @if($room->shelf_status==1)
+                                 <a class="btn btn-success btn-sm" href="orders/create/{{$room->id}}">加入訂單</a>
+                             @endif
+                             <a class="btn btn-success btn-sm" href="{{route('rooms.show', $room->id)}}">查看房間詳情</a>
+
+
+
                         </div>
                     </div>
                 </div>
