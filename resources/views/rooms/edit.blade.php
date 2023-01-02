@@ -49,15 +49,9 @@
                 @if($room->shelf_status==0)
                     <option value="0" selected>整理中</option>
                     <option value="1">開放訂購</option>
-                    <option value="2">已被訂購</option>
                 @elseif($room->shelf_status==1)
                     <option value="0">整理中</option>
                     <option value="1" selected>開放訂購</option>
-                    <option value="2">已被訂購</option>
-                @elseif($room->shelf_status==2)
-                    <option value="0">整理中</option>
-                    <option value="1">開放訂購</option>
-                    <option value="2" selected>已被訂購</option>
                 @endif
             </select>
 {{--            <select id="shelf_status" name="shelf_status" class="form-control">--}}

@@ -10,9 +10,10 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $rooms = Room::all();
+        $rooms = Room::where('shelf_status','1')->get();
+
         $data = [
-            'rooms' => $rooms
+            'rooms' => $rooms,
         ];
         if(Auth::check()){//已登入
             /*if(Auth::user()->ismember == '0'){
@@ -20,7 +21,13 @@ class HomeController extends Controller
             }else if(Auth::user()->ismember == '1'){
                 return redirect('/');
             }*/
-
+            if(Auth::user()->ismember==1){
+                $ismember = Auth::user()->ismember;
+                $data = [
+                    'rooms' => $rooms,
+                    'ismember'=>$ismember
+                ];
+            }
             return view('home.index', $data);
         }else{
 //            return redirect('/login');

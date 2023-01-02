@@ -38,11 +38,9 @@
 {{--            <div class="col-lg-2 col-xxl-2 mb-5">{{($room->shelf_status)? '開放訂購' : '整理中'}}</div>--}}
             <div class="col-lg-2 col-xxl-2 mb-5">
                 @if($room->shelf_status==0)
-                    整理中
+                    不開放
                 @elseif($room->shelf_status==1)
                     開放訂購
-                @elseif($room->shelf_status==2)
-                    已被訂購
                 @endif
             </div>
             <div class="col-lg-2 col-xxl-2 mb-5">{{ $room->people }}</div>

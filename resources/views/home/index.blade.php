@@ -40,11 +40,9 @@
                             <p class="mb-0">目前狀態：
                                 <select id="shelf_status" name="shelf_status" class="form-control" style="text-align: center" disabled>
                                 @if($room->shelf_status==0)
-                                    <option value="0">整理中</option>
+                                    <option value="0">不開放</option>
                                 @elseif($room->shelf_status==1)
                                     <option value="1">開放訂購</option>
-                                @elseif($room->shelf_status==2)
-                                    <option value="2">已被訂購</option>
                                 @endif
                                 </select>
                             </p>
@@ -53,7 +51,9 @@
 
 
                              @if($room->shelf_status==1)
-                                 <a class="btn btn-success btn-sm" href="orders/create/{{$room->id}}">加入訂單</a>
+                                 @if(isset($ismember))
+                                    <a class="btn btn-success btn-sm" href="orders/create/{{$room->id}}">加入訂單</a>
+                                 @endif
                              @endif
                              <a class="btn btn-success btn-sm" href="{{route('rooms.show', $room->id)}}">查看房間詳情</a>
 
