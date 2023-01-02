@@ -50,7 +50,12 @@
                                 {{--                            <p class="mb-0">目前狀態：{{($room->shelf_status)? '開放訂購' : '整理中'}}</p>--}}
                                 {{--                            <a class="btn btn-success btn-sm" href="{{ route('orders.show') }}">詳細資訊</a>--}}
 
-                                <a class="btn btn-success btn-sm" href="../orders/create/{{$rooms->id}}">加入訂單</a>
+
+                                @if($rooms->shelf_status==1)
+                                    @if(isset(Auth::user()->ismember))
+                                        <a class="btn btn-success btn-sm" href="../orders/create/{{$rooms->id}}">加入訂單</a>
+                                    @endif
+                                @endif
                             </div>
                         </div>
                     </div>

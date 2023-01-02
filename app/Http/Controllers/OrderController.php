@@ -46,7 +46,7 @@ class OrderController extends Controller
     public function create($room_id)
     {
         if(Auth::check()) {//已登入
-            if (Auth::user()->ismember == '0') {
+            if (Auth::user()->ismember == '1') {
                 $rooms = Room::find($room_id);
                 $orders = Order::where('room_id', $room_id)->get();
                 $images = Image::where('room_id', $room_id)->get();
@@ -57,8 +57,9 @@ class OrderController extends Controller
                     'images'=>$images,
                     'account'=>$account
                 ];
+
                 return view('orders.create', $data);
-            }else if(Auth::user()->ismember == '1') {
+            }else if(Auth::user()->ismember == '0') {
                 return redirect('/');
             }
         }else{
