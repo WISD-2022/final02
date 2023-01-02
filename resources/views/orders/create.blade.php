@@ -15,7 +15,26 @@
             <input id="start_date" type="date" name="start_date">
             <label for="end_date">預定結束日期：</label>
             <input id="end_date" type="date" name="end_date">
-        <button class="btn btn-primary btn-sm" type="submit">儲存</button>
+        <button class="btn btn-primary btn-sm" type="submit">儲存</button><br>
+<hr>
+        <section class="pt-4">
+            <div class="container px-lg-5" style="line-height:0px">
+                <div class="row gx-lg-5">
+                    <div class="col-lg-4 col-xxl-4 mb-5" text-align="center"><h2>已被訂購時段</h2></div>
+                </div>
+                <div class="row gx-lg-5">
+                    <div class="col-lg-4 col-xxl-4 mb-5">預訂開始時間</div>
+                    <div class="col-lg-4 col-xxl-4 mb-5">預訂結束時間</div>
+
+                </div>
+                @foreach($order as $key => $order)
+                    <div class="row gx-lg-5">
+                        <div class="col-lg-4 col-xxl-4 mb-5">{{$order->start_date}}</div>
+                        <div class="col-lg-4 col-xxl-4 mb-5">{{$order->end_date}}</div>
+                    </div>
+                @endforeach
+            </div>
+        </section>
 
         {{--        <div class="mb-2">--}}
 {{--            <input type="file" name="image" accept="image/*">--}}
