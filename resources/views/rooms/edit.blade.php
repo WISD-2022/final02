@@ -21,7 +21,7 @@
         @method('PATCH')
         @csrf
         <div class="mb-2">
-            @if($images[0]->image != '')
+            @if(isset($images[0]->image))
                 <img src="{{ asset('images/'.$images[0]->image) }}" height="200px" width="300px" alt="一張圖片">
             @endif
             <input type="file" name="image" accept="image/*">

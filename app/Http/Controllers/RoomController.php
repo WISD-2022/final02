@@ -162,14 +162,20 @@ class RoomController extends Controller
     {
         if(Auth::check()) {//已登入
             if (Auth::user()->ismember == '0') {
-                $images = Image::where('room_id', $room->id)->get();
                 $account = Auth::user()->account;
-
-                $data = [
-                    'room'=>$room,
-                    'images'=>$images,
-                    'account'=>$account
-                ];
+                if(isset($images)){
+                    $images = Image::where('room_id', $room->id)->get();
+                    $data = [
+                        'room'=>$room,
+                        'images'=>$images,
+                        'account'=>$account
+                    ];
+                }else{
+                    $data = [
+                        'room'=>$room,
+                        'account'=>$account
+                    ];
+                }
                 return view('rooms.edit', $data);
             }else if(Auth::user()->ismember == '1') {
                 return redirect('/');
