@@ -190,6 +190,6 @@ class RoomController extends Controller
     {
         Image::where('room_id',$room->id)->delete();
         $room->delete();
-        return redirect()->route('rooms.index');
+        return redirect()->route('rooms.index')->with('alert', '刪除房間成功!');
     }
 }

@@ -33,10 +33,12 @@ class OrderController extends Controller
     public function create($room_id)
     {
         $rooms = Room::find($room_id);
+        $orders = Order::where('room_id', $room_id)->get();
         $images = Image::where('room_id', $room_id)->get();
         $account = User::find(22)->account;
         $data = [
             'rooms'=>$rooms,
+            'order'=>$orders,
             'images'=>$images,
             'account'=>$account
         ];
