@@ -103,10 +103,22 @@ class RoomController extends Controller
 //        return redirect('rooms');
     }
 
+//    public function search(SearchRoomRequest $request)
+//    {
+//        return view('rooms.create');
+//    }
 
     public function search(SearchRoomRequest $request)
     {
-        //
+
+        $name = $request->get('search1');
+        //when 参数一有则执行匿名函数
+        $data =  Room::when($name,function ($query)use ($name){
+            $query->where('id','like',"%{$name}%");
+        })->get();
+       // dd($data);
+        return view('rooms.search',compact('data','name'));
+//        return view('rooms.index');
     }
 
 

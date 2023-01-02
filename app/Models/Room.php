@@ -35,5 +35,6 @@ class Room extends Model
         'people',
         'amount',
         'order_id',
+        'search1',
     ];
 }
