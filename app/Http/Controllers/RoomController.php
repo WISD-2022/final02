@@ -130,7 +130,11 @@ class RoomController extends Controller
      */
     public function show(Room $room)
     {
-        //
+
+        $data = [
+            'rooms' => $room
+        ];
+        return view('rooms.show', $data);
     }
 
     /**

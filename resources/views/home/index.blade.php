@@ -52,6 +52,7 @@
 {{--                            <a class="btn btn-success btn-sm" href="{{ route('orders.show') }}">詳細資訊</a>--}}
 
                             <a class="btn btn-success btn-sm" href="orders/create/{{$room->id}}">加入訂單</a>
+                             <a class="btn btn-success btn-sm" href="{{route('rooms.show', $room->id)}}">查看房間詳情</a>
                         </div>
                     </div>
                 </div>
