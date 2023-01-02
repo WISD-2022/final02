@@ -22,12 +22,20 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $orders = Order::all();
-        $data = [
-            'order_date'=>$orders,
-            'user_id'=>Auth::user()->email
-        ];
-        return view('orders.index',$data);
+        if(Auth::check()) {//已登入
+            if (Auth::user()->ismember == '0') {
+                $orders = Order::all();
+                $data = [
+                    'order_date' => $orders,
+                    'user_id' => Auth::user()->email
+                ];
+                return view('orders.index', $data);
+            }else if(Auth::user()->ismember == '1') {
+                return redirect('/');
+            }
+        }else{
+            return redirect()->route('home.index')->with('alert', '請登入!');
+        }
     }
 
     /**
@@ -37,17 +45,25 @@ class OrderController extends Controller
      */
     public function create($room_id)
     {
-        $rooms = Room::find($room_id);
-        $orders = Order::where('room_id', $room_id)->get();
-        $images = Image::where('room_id', $room_id)->get();
-        $account = User::find(22)->account;
-        $data = [
-            'rooms'=>$rooms,
-            'order'=>$orders,
-            'images'=>$images,
-            'account'=>$account
-        ];
-        return view('orders.create', $data);
+        if(Auth::check()) {//已登入
+            if (Auth::user()->ismember == '0') {
+                $rooms = Room::find($room_id);
+                $orders = Order::where('room_id', $room_id)->get();
+                $images = Image::where('room_id', $room_id)->get();
+                $account = User::find(22)->account;
+                $data = [
+                    'rooms'=>$rooms,
+                    'order'=>$orders,
+                    'images'=>$images,
+                    'account'=>$account
+                ];
+                return view('orders.create', $data);
+            }else if(Auth::user()->ismember == '1') {
+                return redirect('/');
+            }
+        }else{
+            return redirect()->route('home.index')->with('alert', '請登入!');
+        }
     }
 
     /**

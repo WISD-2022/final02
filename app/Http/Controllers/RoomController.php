@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Order;
 use App\Models\Room;
 use App\Models\Image;
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreRoomRequest;
 use App\Http\Requests\UpdateRoomRequest;
@@ -31,19 +33,24 @@ class RoomController extends Controller
      */
     public function index()
     {
-        if(Auth::user()->ismember == '0'){
+        if(Auth::check()) {//已登入
+            if (Auth::user()->ismember == '0') {
 //            $rooms = Room::all();
 //            $data = ['rooms' => $rooms];
 //            $rooms = Room::all();
 //            $this->room = new Room(); //initializes it
 //            return view('rooms.index', compact('rooms'));
-            $rooms = $this->roomRepo->index();
-            $data = [
-                'rooms' => $rooms
-            ];
-            return view('rooms.index', $data);//, $data);
-        }else if(Auth::user()->ismember == '1'){
-            return redirect('/');
+                $rooms = $this->roomRepo->index();
+                $data = [
+                    'rooms' => $rooms
+                ];
+                return view('rooms.index', $data);//, $data);
+            } else if (Auth::user()->ismember == '1') {
+                return redirect('/');
+            }
+        }
+        else{
+            return redirect()->route('home.index')->with('alert', '請登入!');
         }
     }
 
@@ -54,8 +61,16 @@ class RoomController extends Controller
      */
     public function create()
     {
-        $account = Auth::user()->account;
-        return view('rooms.create', compact('account'));
+        if(Auth::check()) {//已登入
+            if (Auth::user()->ismember == '0') {
+                $account = Auth::user()->account;
+                return view('rooms.create', compact('account'));
+            }else if(Auth::user()->ismember == '1') {
+                return redirect('/');
+            }
+        }else{
+            return redirect()->route('home.index')->with('alert', '請登入!');
+        }
     }
 
     /**
@@ -145,15 +160,23 @@ class RoomController extends Controller
      */
     public function edit(Room $room)
     {
-        $images = Image::where('room_id', $room->id)->get();
-        $account = Auth::user()->account;
+        if(Auth::check()) {//已登入
+            if (Auth::user()->ismember == '0') {
+                $images = Image::where('room_id', $room->id)->get();
+                $account = Auth::user()->account;
 
-        $data = [
-            'room'=>$room,
-            'images'=>$images,
-            'account'=>$account
-        ];
-        return view('rooms.edit', $data);
+                $data = [
+                    'room'=>$room,
+                    'images'=>$images,
+                    'account'=>$account
+                ];
+                return view('rooms.edit', $data);
+            }else if(Auth::user()->ismember == '1') {
+                return redirect('/');
+            }
+        }else{
+            return redirect()->route('home.index')->with('alert', '請登入!');
+        }
     }
 
     /**

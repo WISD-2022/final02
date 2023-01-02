@@ -28,9 +28,8 @@
             <div class="form-group">
                 <label for="shelf_status" class="form-label">上架狀態？</label>
                 <select id="shelf_status" name="shelf_status" class="form-control">
-                    <option value="0">整理中</option>
+                    <option value="0">不開放</option>
                     <option value="1">開放訂購</option>
-                    <option value="2">已被訂購</option>
                 </select>
             </div>
             <div class="form-group">
