@@ -30,6 +30,10 @@ Route::middleware([
 });
 
 Route::resource('rooms', RoomController::class);
-Route::get('rooms/search', [RoomController::class, 'search'])->name("rooms.search");
+Route::get('search', [RoomController::class, 'search'])->name("rooms.search");
 Route::resource('/orders',OrderController::class);
 Route::get('orders/create/{id}', [OrderController::class, 'create']);
+
+//Route::get('/rooms/search', function () {
+//    return view('rooms.create');
+//});

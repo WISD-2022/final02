@@ -24,5 +24,6 @@ class HomeController extends Controller
         }else{
             return redirect('/login');
         }
+
     }
 }
