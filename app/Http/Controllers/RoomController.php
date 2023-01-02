@@ -163,8 +163,8 @@ class RoomController extends Controller
         if(Auth::check()) {//已登入
             if (Auth::user()->ismember == '0') {
                 $account = Auth::user()->account;
+                $images = Image::where('room_id', $room->id)->get();
                 if(isset($images)){
-                    $images = Image::where('room_id', $room->id)->get();
                     $data = [
                         'room'=>$room,
                         'images'=>$images,
