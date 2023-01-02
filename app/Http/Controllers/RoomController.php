@@ -145,10 +145,19 @@ class RoomController extends Controller
      */
     public function show(Room $room)
     {
+        $images = Image::where('room_id', $room->id)->get();
+        if(isset($images)){
+            $data = [
+                'images'=>$images,
+                'rooms' => $room
 
-        $data = [
-            'rooms' => $room
-        ];
+            ];
+        }else{
+            $data = [
+                'rooms' => $room
+            ];
+        }
+
         return view('rooms.show', $data);
     }
 
