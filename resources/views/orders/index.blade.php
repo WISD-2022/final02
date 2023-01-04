@@ -24,7 +24,7 @@
                     <div class="col-lg-4 col-xxl-1 mb-5">房號</div>
                     <div class="col-lg-2 col-xxl-2 mb-5">開始時間</div>
                     <div class="col-lg-2 col-xxl-2 mb-5">結束時間</div>
-                    <div class="col-lg-1 col-xxl-2 mb-5">會員信箱</div>
+                    <div class="col-lg-1 col-xxl-3 mb-5">會員信箱</div>
 
                 </div>
 
@@ -40,7 +40,7 @@
                         <div class="col-lg-2 col-xxl-2 mb-5">
                             {{$order_date->end_date}}
                         </div>
-                        <div class="col-lg-2 col-xxl-2 mb-5">{{$user_id}}</div>
+                        <div class="col-lg-2 col-xxl-3 mb-5">{{$users[$key]->email}}</div>
                         <div class="col-lg-2 col-xxl-2 mb-5">
                             <form action="{{route('orders.destroy', $order_date->id)}}" method="POST" style="display: inline-block">
                                 @method('DELETE')
@@ -53,6 +53,7 @@
                         </div>
                     </div>
                 @endforeach
+
             </div>
         </section>
         {{--    <section class="pt-4">--}}

@@ -25,10 +25,19 @@ class OrderController extends Controller
         if(Auth::check()) {//已登入
             if (Auth::user()->ismember == '0') {
                 $orders = Order::all();
+//            $email= User::where('id',$orders->user_id)->get();
+//                $usersa = DB::table('users')->select('id', 'email as user_email')->get();
+                $users = User::
+                    join('orders', 'users.id', '=', 'orders.user_id')
+                    ->select('users.email')
+                    ->get();
                 $data = [
                     'order_date' => $orders,
-                    'user_id' => Auth::user()->email
+                    'users'=>$users
+//                    'users' => Auth::user()->email
+//                    現在這個是抓我登入的信箱
                 ];
+
                 return view('orders.index', $data);
             }else if(Auth::user()->ismember == '1') {
                 return redirect('/');
