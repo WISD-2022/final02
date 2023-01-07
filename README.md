@@ -1,4 +1,4 @@
-## 系統功能圖片連結網頁 點進去查看 https://imgur.com/a/7mmFTEG 
+## 系統功能圖片連結網頁 點進去查看 https://imgur.com/a/mbMxikm 
 此連結經檢測無毒，請放心前往
 # 系統主要功能<br>
 ## 訪客:<br>
