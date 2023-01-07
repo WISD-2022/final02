@@ -19,40 +19,40 @@
 
 ## 訪客:
 - 查看主頁
-Route::get('/', [HomeController::class, 'index'])->name('home.index')
+Route::get('/', [HomeController::class, 'index'])->name('home.index');
 - 查詢房間
-Route::get('search', [RoomController::class, 'search'])->name('rooms.search')
+Route::get('search', [RoomController::class, 'search'])->name('rooms.search');
 - 查看房間頁面
-Route::get('rooms/{room}', [RoomController::class, 'show'])->name('rooms.show')
+Route::get('rooms/{room}', [RoomController::class, 'show'])->name('rooms.show');
 - 註冊會員
-Route::get('register', [RegisteredUserController::class, 'create'])
-Route::post('register', [RegisteredUserController::class, 'store'])
+Route::get('register', [RegisteredUserController::class, 'create']);<br>
+Route::post('register', [RegisteredUserController::class, 'store']);
 - 登入會員
-Route::get('login', [AuthenticatedSessionController::class, 'create'])
-Route::post('login', [AuthenticatedSessionController::class, 'store'])
+Route::get('login', [AuthenticatedSessionController::class, 'create']);<br>
+Route::post('login', [AuthenticatedSessionController::class, 'store']);
 
 ## 會員:
 - 訂購房間
-Route::get('orders/create/{id}', [OrderController::class, 'create']);
+Route::get('orders/create/{id}', [OrderController::class, 'create']);<br>
 Route::post('orders', [OrderController::class, 'store'])->name('orders.store');
 - 登出會員
-Route::get('logout', [AuthenticatedSessionController::class, 'destroy'])
+Route::get('logout', [AuthenticatedSessionController::class, 'destroy']);
 
 ## 管理人員:
 - 查看所有房間
 Route::get('rooms', [RoomController::class, 'index'])->name('rooms.index');
 - 新增房間
-Route::get('rooms/create', [RoomController::class, 'create'])->name('rooms.create');
+Route::get('rooms/create', [RoomController::class, 'create'])->name('rooms.create');<br>
 Route::post('rooms, [RoomController::class, 'store'])->name('rooms.store');
 - 刪除房間
 Route::delete('rooms/{room}', [RoomController::class, 'destroy']) ->name('rooms.destroy');
 - 修改房間
-Route::get('rooms/{room}/edit', [RoomController::class, 'edit']) ->name('rooms.edit');
+Route::get('rooms/{room}/edit', [RoomController::class, 'edit']) ->name('rooms.edit');<br>
 Route::patch('rooms/{room}', [RoomController::class, 'update']) ->name('rooms.update');
 - 查看房間訂單
-Route::get('orders', [OrderController::class, 'index'])->name('orders.index')
+Route::get('orders', [OrderController::class, 'index'])->name('orders.index');
 - 取消訂單
-Route::delete('orders/{order}', [OrderController::class, 'destroy'])->name('orders.destroy)
+Route::delete('orders/{order}', [OrderController::class, 'destroy'])->name('orders.destroy);
 
 
 
