@@ -18,40 +18,40 @@
 取消訂單<br>
 
 ## 訪客:
-- 查看主頁
+- 查看主頁<br>
 Route::get('/', [HomeController::class, 'index'])->name('home.index');
-- 查詢房間
+- 查詢房間<br>
 Route::get('search', [RoomController::class, 'search'])->name('rooms.search');
-- 查看房間頁面
+- 查看房間頁面<br>
 Route::get('rooms/{room}', [RoomController::class, 'show'])->name('rooms.show');
-- 註冊會員
+- 註冊會員<br>
 Route::get('register', [RegisteredUserController::class, 'create']);<br>
 Route::post('register', [RegisteredUserController::class, 'store']);
-- 登入會員
+- 登入會員<br>
 Route::get('login', [AuthenticatedSessionController::class, 'create']);<br>
 Route::post('login', [AuthenticatedSessionController::class, 'store']);
 
 ## 會員:
-- 訂購房間
+- 訂購房間<br>
 Route::get('orders/create/{id}', [OrderController::class, 'create']);<br>
 Route::post('orders', [OrderController::class, 'store'])->name('orders.store');
-- 登出會員
+- 登出會員<br>
 Route::get('logout', [AuthenticatedSessionController::class, 'destroy']);
 
 ## 管理人員:
-- 查看所有房間
+- 查看所有房間<br>
 Route::get('rooms', [RoomController::class, 'index'])->name('rooms.index');
-- 新增房間
+- 新增房間<br>
 Route::get('rooms/create', [RoomController::class, 'create'])->name('rooms.create');<br>
 Route::post('rooms, [RoomController::class, 'store'])->name('rooms.store');
-- 刪除房間
+- 刪除房間<br>
 Route::delete('rooms/{room}', [RoomController::class, 'destroy']) ->name('rooms.destroy');
-- 修改房間
+- 修改房間<br>
 Route::get('rooms/{room}/edit', [RoomController::class, 'edit']) ->name('rooms.edit');<br>
 Route::patch('rooms/{room}', [RoomController::class, 'update']) ->name('rooms.update');
-- 查看房間訂單
+- 查看房間訂單<br>
 Route::get('orders', [OrderController::class, 'index'])->name('orders.index');
-- 取消訂單
+- 取消訂單<br>
 Route::delete('orders/{order}', [OrderController::class, 'destroy'])->name('orders.destroy);
 
 
