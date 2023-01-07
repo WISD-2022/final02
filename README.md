@@ -16,6 +16,48 @@
 修改房間<br>
 查看房間訂單<br>
 取消訂單<br>
+
+## 訪客:
+- 查看主頁
+Route::get('/', [HomeController::class, 'index'])->name('home.index')
+- 查詢房間
+Route::get('search', [RoomController::class, 'search'])->name('rooms.search')
+- 查看房間頁面
+Route::get('rooms/{room}', [RoomController::class, 'show'])->name('rooms.show')
+- 註冊會員
+Route::get('register', [RegisteredUserController::class, 'create'])
+Route::post('register', [RegisteredUserController::class, 'store'])
+- 登入會員
+Route::get('login', [AuthenticatedSessionController::class, 'create'])
+Route::post('login', [AuthenticatedSessionController::class, 'store'])
+
+## 會員:
+- 訂購房間
+Route::get('orders/create/{id}', [OrderController::class, 'create']);
+Route::post('orders', [OrderController::class, 'store'])->name('orders.store');
+- 登出會員
+Route::get('logout', [AuthenticatedSessionController::class, 'destroy'])
+
+## 管理人員:
+- 查看所有房間
+Route::get('rooms', [RoomController::class, 'index'])->name('rooms.index');
+- 新增房間
+Route::get('rooms/create', [RoomController::class, 'create'])->name('rooms.create');
+Route::post('rooms, [RoomController::class, 'store'])->name('rooms.store');
+- 刪除房間
+Route::delete('rooms/{room}', [RoomController::class, 'destroy']) ->name('rooms.destroy');
+- 修改房間
+Route::get('rooms/{room}/edit', [RoomController::class, 'edit']) ->name('rooms.edit');
+Route::patch('rooms/{room}', [RoomController::class, 'update']) ->name('rooms.update');
+- 查看房間訂單
+Route::get('orders', [OrderController::class, 'index'])->name('orders.index')
+- 取消訂單
+Route::delete('orders/{order}', [OrderController::class, 'destroy'])->name('orders.destroy)
+
+
+
+
+## 還原專案步驟
 1. 複製 https://github.com/WISD-2022/final02.git本系統在GitHub的專案
 - **打開 Source tree，點選 Clone 後，輸入以下資料Source Path:https://github.com/WISD-2022/final02.git Destination Path:C:\wagon\uwamp\www\final02 打開cmder，切換至專案所在資料夾，cd final02**
 
