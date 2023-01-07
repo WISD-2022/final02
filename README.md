@@ -1,20 +1,20 @@
-## 系統主要功能<br>
-訪客:<br>
+# 系統主要功能<br>
+## 訪客:<br>
 查看主頁<br>
-查詢房型<br>
-查看房型頁面<br>
+查詢房間<br>
+查看房間頁面<br>
 註冊會員<br>
 登入會員<br>
 ## 會員:<br>
 編輯基本資料<br>
 訂購房間<br>
 登出會員<br>
-管理人員:<br>
-新增房型<br>
-刪除房型<br>
-修改房型<br>
+## 管理人員:<br>
+新增房間<br>
+刪除房間<br>
+修改房間<br>
 查看房間訂單<br>
-修改訂單狀態<br>
+取消訂單<br>
 1. 複製 https://github.com/WISD-2022/final02.git本系統在GitHub的專案
 - **打開 Source tree，點選 Clone 後，輸入以下資料Source Path:https://github.com/WISD-2022/final02.git Destination Path:C:\wagon\uwamp\www\final02 打開cmder，切換至專案所在資料夾，cd final02**
 
