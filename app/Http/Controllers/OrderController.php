@@ -60,12 +60,22 @@ class OrderController extends Controller
                 $orders = Order::where('room_id', $room_id)->get();
                 $images = Image::where('room_id', $room_id)->get();
                 $account = User::find(22)->account;
-                $data = [
-                    'rooms'=>$rooms,
-                    'order'=>$orders,
-                    'images'=>$images,
-                    'account'=>$account
-                ];
+                if(isset($images)){
+                    $data = [
+                        'images'=>$images,
+                        'rooms'=>$rooms,
+                        'order'=>$orders,
+                        'images'=>$images,
+                        'account'=>$account
+                    ];
+                }else{
+                    $data = [
+                        'rooms'=>$rooms,
+                        'order'=>$orders,
+                        'images'=>$images,
+                        'account'=>$account
+                    ];
+                }
 
                 return view('orders.create', $data);
             }else if(Auth::user()->ismember == '0') {
