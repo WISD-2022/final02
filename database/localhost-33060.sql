@@ -36,7 +36,8 @@ CREATE TABLE `images` (
 INSERT INTO `images` (`id`, `image`, `room_id`, `created_at`, `updated_at`) VALUES
 (11,	'201_1672487591.jpg',	201,	'2022-12-31 11:53:11',	'2022-12-31 11:53:11'),
 (12,	'202_1672487699.jpg',	202,	'2022-12-31 11:55:00',	'2022-12-31 11:55:00'),
-(13,	'204_1672581180.jpg',	204,	'2022-12-31 15:56:46',	'2023-01-01 13:53:00');
+(13,	'204_1673454343.jpg',	204,	'2022-12-31 15:56:46',	'2023-01-11 16:25:43'),
+(14,	'203_1673454550.jpg',	203,	'2023-01-11 16:28:39',	'2023-01-11 16:29:10');
 
 DROP TABLE IF EXISTS `migrations`;
 CREATE TABLE `migrations` (
@@ -66,6 +67,8 @@ CREATE TABLE `orders` (
   `start_date` date NOT NULL,
   `end_date` date NOT NULL,
   `user_id` bigint(20) unsigned NOT NULL,
+  `amount` int(11) unsigned DEFAULT NULL,
+  `status` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -75,10 +78,14 @@ CREATE TABLE `orders` (
   CONSTRAINT `orders_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-INSERT INTO `orders` (`id`, `room_id`, `start_date`, `end_date`, `user_id`, `created_at`, `updated_at`) VALUES
-(18,	101,	'2023-01-10',	'2023-01-17',	1,	'2023-01-01 18:08:51',	'2023-01-01 18:08:51'),
-(19,	101,	'2023-01-13',	'2023-01-17',	1,	'2023-01-01 18:09:43',	'2023-01-01 18:09:43'),
-(20,	101,	'2023-01-14',	'2023-01-16',	1,	'2023-01-01 18:25:59',	'2023-01-01 18:25:59');
+INSERT INTO `orders` (`id`, `room_id`, `start_date`, `end_date`, `user_id`, `amount`, `status`, `created_at`, `updated_at`) VALUES
+(20,	101,	'2023-01-14',	'2023-01-16',	1,	5000,	'已付款',	'2023-01-01 18:25:59',	'2023-01-11 16:09:58'),
+(21,	102,	'2023-01-02',	'2023-01-02',	1,	5000,	'未處理',	'2023-01-01 19:43:40',	'2023-01-11 15:22:46'),
+(22,	101,	'2023-01-31',	'2023-02-02',	3,	5000,	'未處理',	'2023-01-04 01:47:01',	'2023-01-04 01:47:01'),
+(23,	101,	'2023-02-02',	'2023-01-19',	3,	5000,	'未處理',	'2023-01-04 02:29:30',	'2023-01-04 02:29:30'),
+(24,	101,	'2022-10-10',	'2022-10-20',	3,	5000,	'未處理',	'2023-01-04 02:31:53',	'2023-01-04 02:31:53'),
+(29,	202,	'2023-01-25',	'2023-01-26',	25,	4000,	'已結束',	'2023-01-11 14:20:25',	'2023-01-11 15:57:00'),
+(30,	201,	'2023-02-02',	'2023-02-03',	25,	4000,	'未處理',	'2023-01-11 15:19:41',	'2023-01-11 15:19:41');
 
 DROP TABLE IF EXISTS `order_details`;
 CREATE TABLE `order_details` (
@@ -144,8 +151,8 @@ INSERT INTO `rooms` (`id`, `shelf_status`, `introduce`, `people`, `amount`, `ord
 (104,	0,	'房內設施：藝術家精選書籍 / 無線網路 / 冷暖氣 / 獨立淋浴衛浴 / 沐浴用品 / 毛巾 / 吹風機\r\n住宿均含：北投特色早點 / 台灣在地點心 / 精選茶包 / 台灣茶體驗\r\n為響應環保，房內沒有提供牙刷及牙膏，請您記得要自備唷！',	2,	5000,	NULL,	'2022-12-31 10:45:41',	'2022-12-31 10:45:41'),
 (201,	1,	'房內設施：藝術家精選書籍 / 無線網路 / 冷暖氣 / 獨立淋浴衛浴 / 沐浴用品 / 毛巾 / 吹風機\r\n住宿均含：北投特色早點 / 台灣在地點心 / 精選茶包 / 台灣茶體驗\r\n為響應環保，房內沒有提供牙刷及牙膏，請您記得要自備唷！',	4,	4000,	NULL,	'2022-12-31 11:53:11',	'2022-12-31 11:53:11'),
 (202,	1,	'房內設施：藝術家精選書籍 / 無線網路 / 冷暖氣 / 獨立淋浴衛浴 / 沐浴用品 / 毛巾 / 吹風機\r\n住宿均含：北投特色早點 / 台灣在地點心 / 精選茶包 / 台灣茶體驗\r\n為響應環保，房內沒有提供牙刷及牙膏，請您記得要自備唷！',	4,	4000,	NULL,	'2022-12-31 11:54:59',	'2022-12-31 11:54:59'),
-(203,	1,	'房內設施：藝術家精選書籍 / 無線網路 / 冷暖氣 / 獨立淋浴衛浴 / 沐浴用品 / 毛巾 / 吹風機\r\n住宿均含：北投特色早點 / 台灣在地點心 / 精選茶包 / 台灣茶體驗\r\n為響應環保，房內沒有提供牙刷及牙膏，請您記得要自備唷！',	4,	5000,	NULL,	'2022-12-31 12:04:05',	'2022-12-31 12:04:05'),
-(204,	0,	'test 204111',	4,	4000,	NULL,	'2022-12-31 15:56:46',	'2023-01-01 13:43:07');
+(203,	1,	'房內設施：藝術家精選書籍 / 無線網路 / 冷暖氣 / 獨立淋浴衛浴 / 沐浴用品 / 毛巾 / 吹風機\r\n住宿均含：北投特色早點 / 台灣在地點心 / 精選茶包 / 台灣茶體驗\r\n為響應環保，房內沒有提供牙刷及牙膏，請您記得要自備唷！',	4,	5000,	NULL,	'2022-12-31 12:04:05',	'2023-01-01 19:55:10'),
+(204,	0,	'test 204',	4,	4000,	NULL,	'2022-12-31 15:56:46',	'2023-01-02 05:51:26');
 
 DROP TABLE IF EXISTS `sessions`;
 CREATE TABLE `sessions` (
@@ -161,9 +168,11 @@ CREATE TABLE `sessions` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('ayKIUfV8p3iICxa5dlPQNuAksdM7YJuKWk8RRKLT',	NULL,	'::1',	'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36',	'YTozOntzOjY6Il90b2tlbiI7czo0MDoiQ2NxVkVVdHN6OE5HTEdsQzg5aFh4VFFPc0FQYlRkRXBDZXpNU2VoQSI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MjE6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMCI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=',	1672590896),
-('iaJ0aSbtYRSKX6Rx1D4QcCIkTsqrcTbYFLVRTuOQ',	1,	'::1',	'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36',	'YTo0OntzOjY6Il90b2tlbiI7czo0MDoicTRYcWgxeXJDNmluRkZCRHFnUU9DU2VFYmV0YjFwZWhXNWJRTnJETSI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MjE6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMCI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjE7fQ==',	1672599909),
-('VVas2orFxWUlYLXmItrltZiKZC4ZhJbAHS79Ndks',	22,	'::1',	'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36',	'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiYXpMQkJMbWdIb21uaE5GdDFBcjkyeEJKNllFRzlHQUFhTk1WR1FXWiI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6Mjc6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMC9yb29tcyI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjIyO30=',	1672590896);
+('1ww3utCBAUy6ltfYyg3xTlmR1n3YiDHppLypwuLV',	NULL,	'::1',	'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36',	'YTozOntzOjY6Il90b2tlbiI7czo0MDoiV2tOTnB2bUE4SU16blA5ZUFhQUpKNWsxdWVvVFRWTUdJU2VRdHYzNyI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6Mjg6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMC9sb2dvdXQiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX19',	1673448803),
+('eKYBd2bYrxa9WCCxvcW9ZvHbGW5HxJEv9Dxa9DP5',	NULL,	'::1',	'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36',	'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiZnRUQndnTm5zUENOVmJ6S2FqVVZ5N2hBN0l5TFNTd1ZQNWQ0VGVqMiI7czo1OiJhbGVydCI7czoxMDoi6KuL55m75YWlISI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJuZXciO2E6MDp7fXM6Mzoib2xkIjthOjE6e2k6MDtzOjU6ImFsZXJ0Ijt9fXM6OToiX3ByZXZpb3VzIjthOjE6e3M6MzoidXJsIjtzOjI4OiJodHRwOi8vbG9jYWxob3N0OjgwMDAvb3JkZXJzIjt9fQ==',	1673448802),
+('V4Z161RWwTXuwsdv7RiGNzbtKgsy5WxP4RoNDtS4',	NULL,	'::1',	'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36',	'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiV1dVQ1E3eG9SMGVwQm1SU2g4RkpmaExJdVRWdjVGZGU3Rmd0R0E5QiI7czo1OiJhbGVydCI7czoxMDoi6KuL55m75YWlISI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJuZXciO2E6MDp7fXM6Mzoib2xkIjthOjE6e2k6MDtzOjU6ImFsZXJ0Ijt9fXM6OToiX3ByZXZpb3VzIjthOjE6e3M6MzoidXJsIjtzOjI4OiJodHRwOi8vbG9jYWxob3N0OjgwMDAvb3JkZXJzIjt9fQ==',	1673450408),
+('winOdDqbWmEZWG1anINuBv5itrh9DU5ADCsyM8SG',	22,	'::1',	'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36',	'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiTHV5SXJFQ2tLNGZJU1B0OXZEQm1RWEtXSTNGaGtDaU1VU0k0aTJmdyI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzY6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMC9yb29tcy8yMDMvZWRpdCI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjIyO30=',	1673455410),
+('WKJtrqNV0NIBhPTsh0zCHM2tKwd4SLv7ETuNJ5AY',	1,	'::1',	'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36',	'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiTG5sMlBieVViN3V4clVHMXF1YVkyVHZBdUhiVmdyZkc3eHk4NHRQNiI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6Mjg6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMC9vcmRlcnMiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX1zOjUwOiJsb2dpbl93ZWJfNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI7aToxO30=',	1673453058);
 
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
@@ -200,6 +209,9 @@ INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `tw
 (9,	'few',	'472@gmail.com',	NULL,	'$2y$10$9ZAfQasH9VOIk2UpK0BgeupNQ9iFXOYiIsqwSxqf8Mg4vgTy2K5Um',	NULL,	NULL,	NULL,	'0912161',	1,	'fw65qf',	NULL,	NULL,	NULL,	'2022-12-29 15:18:24',	'2022-12-29 15:18:24',	1),
 (10,	'54646',	'474@gmail.com',	NULL,	'$2y$10$32EE4Mjf5jue6YCccg74F.Mwxlhxm9aNMHUjjNmsh5hiaOFcMOj6.',	NULL,	NULL,	NULL,	'0911616',	1,	'4wf65',	NULL,	NULL,	NULL,	'2022-12-29 15:22:21',	'2022-12-29 15:22:21',	1),
 (11,	'weg',	'370@gmail.com',	NULL,	'$2y$10$LguGqNbqhgQPJeXSL9nD/eagTIS4.fgz.GSz/xCFvO7dINAjZS4JS',	NULL,	NULL,	NULL,	'09156165',	1,	'65w',	NULL,	NULL,	NULL,	'2022-12-29 15:31:02',	'2022-12-29 15:31:02',	1),
-(22,	'test1',	'100@gmail.com',	NULL,	'$2y$10$8o33Y7apj3dmWMX1cFULi.GHpBeQZWNP4LihmjawE2BycEqWPu9.C',	NULL,	NULL,	NULL,	'123',	1,	'23',	NULL,	NULL,	NULL,	'2022-12-29 16:04:34',	'2022-12-29 16:04:34',	0);
+(22,	'test1',	'100@gmail.com',	NULL,	'$2y$10$8o33Y7apj3dmWMX1cFULi.GHpBeQZWNP4LihmjawE2BycEqWPu9.C',	NULL,	NULL,	NULL,	'123',	1,	'23',	NULL,	NULL,	NULL,	'2022-12-29 16:04:34',	'2022-12-29 16:04:34',	0),
+(23,	'4141',	'1234567@gmail.com',	NULL,	'$2y$10$gN.RyjgfF2KlPd.1eu3NSOYwmysH3Aq7pB40syP37zdTXZh4tUax6',	NULL,	NULL,	NULL,	'858',	1,	'58585',	NULL,	NULL,	NULL,	'2023-01-04 02:30:17',	'2023-01-04 02:30:17',	1),
+(24,	'4141',	'12345678@gmail.com',	NULL,	'$2y$10$b8bACCX7.qPD8pxwUb9gBul6lhfjdd.A2N5b5rS0j/bVuVZTqhKJW',	NULL,	NULL,	NULL,	'858',	1,	'58585',	NULL,	NULL,	NULL,	'2023-01-04 02:30:57',	'2023-01-04 02:30:57',	0),
+(25,	'101',	'101@gmail.com',	NULL,	'$2y$10$O/muJJiUNV2Vr1m0poB0EOxfxkrskLGT9i5KPj2Y6EybQcqY7WoS2',	NULL,	NULL,	NULL,	'0911111111',	1,	'101',	NULL,	NULL,	NULL,	'2023-01-11 11:55:50',	'2023-01-11 11:55:50',	1);
 
--- 2023-01-01 19:05:34
+-- 2023-01-11 16:50:02

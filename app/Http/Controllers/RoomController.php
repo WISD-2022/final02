@@ -203,18 +203,25 @@ class RoomController extends Controller
      */
     public function update(Room $room, UpdateRoomRequest $request)
     {
-        if($request->has('image')) {
+        if ($request->has('image')) {
             //影像圖檔-自訂檔案名稱
-            $imageName = $room->id.'_'.time().'.'.$request->image->extension();
+            $imageName = $room->id . '_' . time() . '.' . $request->image->extension();
             //把檔案存到公開的資料夾
             $file_path = $request->image->move(public_path('images'), $imageName);
-            Image::where('room_id',$room->id)->update(['image'=>$imageName]);
+            $update = Image::where('room_id', $room->id)->update(['image' => $imageName]);
         }
         $data = $request->all();
         unset($data['image']);
         $room->update($data);
 
 //        Room::whereId($room)->update($validatedData);
+        if ($update == 0)
+        {
+            Image::create([
+                'image' => $imageName,
+                'room_id' => $request->id,
+            ]);
+        }
         return redirect()->route('rooms.index')->with('alert', '更新房間成功!');
     }
 
