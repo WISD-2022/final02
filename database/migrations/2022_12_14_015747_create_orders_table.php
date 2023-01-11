@@ -18,6 +18,8 @@ return new class extends Migration
             $table->date('start_date');
             $table->date('end_date');
             $table->unsignedbigInteger('user_id');
+            $table->integer('amount')->nullable();
+            $table->varchar('status')->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });

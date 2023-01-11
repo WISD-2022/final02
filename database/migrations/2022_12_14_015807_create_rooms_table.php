@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('rooms', function (Blueprint $table) {
             $table->id();
             $table->integer('shelf_status');
-            $table->integer('introduce');
+            $table->varchar('introduce');
             $table->integer('people');
             $table->integer('amount');
            $table->unsignedbigInteger('order_id');

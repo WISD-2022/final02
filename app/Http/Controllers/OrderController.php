@@ -37,10 +37,20 @@ class OrderController extends Controller
 //                    'users' => Auth::user()->email
 //                    現在這個是抓我登入的信箱
                 ];
-
                 return view('orders.index', $data);
             }else if(Auth::user()->ismember == '1') {
-                return redirect('/');
+                $users = User::find(Auth::user()->id);
+                $orders = Order::where('user_id',Auth::user()->id)->get();
+                $account = User::find(22)->account;
+                //抓不到    $orders = $users->order()->get();
+                $data = [
+                    'order' => $orders,
+                    'users'=>$users,
+                    'account'=>$account
+//                    'users' => Auth::user()->email
+//                    現在這個是抓我登入的信箱
+                ];
+                return view('orders.index1', $data);
             }
         }else{
             return redirect()->route('home.index')->with('alert', '請登入!');
@@ -126,9 +136,10 @@ class OrderController extends Controller
                 'start_date'=>$request->start_date,
                 'end_date'=>$request->end_date,
                 'user_id'=>Auth::user()->id,
+                'status'=>'未處理'
             ]);
         }
-        return redirect()->route('home.index')->with('alert', '訂購成功!');
+        return redirect()->route('orders.index')->with('alert', '訂購成功!');
 //
 //        OrderDetail::create([
 //            'order_id'=>$request->start_date,
@@ -178,8 +189,8 @@ class OrderController extends Controller
      */
     public function update(UpdateOrderRequest $request, Order $order)
     {
-        /*$order->update($request->all());
-        return redirect()->route('orders.index');*/
+        $order->update(['status'=>$request->status]);
+        return redirect()->route('orders.index');
     }
 
     /**

@@ -1,6 +1,11 @@
-@extends('rooms.layouts.master')
+@extends('layouts.master')
 
-@section('page-title', '民宿管理')
+@section('page-title', '訂單紀錄')
+
+@section('page-style')
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="{{ asset('css/home-styles.css') }}" rel="stylesheet"/>
+@endsection
 {{--跳出視窗--}}
 <script>
     var msg = '{{Session::get('alert')}}';
@@ -12,68 +17,50 @@
 
 @section('page-content')
     <div class="container-fluid px-4">
-        <h1 class="mt-4">訂單管理</h1>
+        <h1 class="mt-4">訂單紀錄</h1>
         <ol class="breadcrumb mb-4">
-            <li class="breadcrumb-item active">訂單管理</li>
+            <li class="breadcrumb-item active">{{Auth::user()->name}}，您好</li>
         </ol>
 
-        <section class="pt-2">
-            <div class="container px-lg-8">
-                <div class="row gx-lg-1">
+        <section class="pt-4">
+            <div class="container px-lg-6">
+                <div class="row gx-lg-5">
                     <div class="col-lg-1 col-xxl-1 mb-5">編號</div>
                     <div class="col-lg-1 col-xxl-1 mb-5">房號</div>
-                    <div class="col-lg-2 col-xxl-2 mb-5">開始時間</div>
-                    <div class="col-lg-2 col-xxl-2 mb-5">結束時間</div>
-                    <div class="col-lg-1 col-xxl-2 mb-5">會員信箱</div>
-                    <div class="col-lg-1 col-xxl-1 mb-5">金額</div>
-                    <div class="col-lg-1 col-xxl-3 mb-5">交易狀態</div>
+                    <div class="col-lg-1 col-xxl-2 mb-5">開始時間</div>
+                    <div class="col-lg-1 col-xxl-2 mb-5">結束時間</div>
+                    <div class="col-lg-1 col-xxl-2 mb-5">應繳款帳戶</div>
+                    <div class="col-lg-1 col-xxl-1 mb-5">狀態</div>
+                    <div class="col-lg-1 col-xxl-2 mb-5">確認付款</div>
                 </div>
 
                 <!-- Main Content -->
-                @foreach($order_date as $key => $order_date)
-                    <div class="row gx-lg-1">
-                        <div class="col-lg-1 col-xxl-1 mb-5">{{$order_date->id}}</div>
-                        <div class="col-lg-1 col-xxl-1 mb-5">{{$order_date->room_id}}</div>
+                @foreach($order as $key => $order)
+                    <div class="row gx-lg-5">
+                        <div class="col-lg-1 col-xxl-1 mb-5">{{$order->id}}</div>
+                        <div class="col-lg-1 col-xxl-1 mb-5">{{$order->room_id}}</div>
                         {{--            <div class="col-lg-2 col-xxl-2 mb-5">{{($room->shelf_status)? '開放訂購' : '整理中'}}</div>--}}
-                        <div class="col-lg-2 col-xxl-2 mb-5">
-                            {{$order_date->start_date}}
-                        </div>
-                        <div class="col-lg-2 col-xxl-2 mb-5">
-                            {{$order_date->end_date}}
-                        </div>
-                        <div class="col-lg-1 col-xxl-2 mb-5">{{$users[$key]->email}}</div>
-                        <div class="col-lg-1 col-xxl-1 mb-5">{{$order_date->amount}}</div>
                         <div class="col-lg-1 col-xxl-2 mb-5">
-                            <form action="{{route('orders.update', $order_date->id)}}" method="POST" style="display:inline-block">
-                                @method('PATCH')
-                                @csrf
-                                @if($order_date->status=='已付款')
-                                    <select id="status" name="status" class="form-control">
-                                        <option value="已付款" selected>已付款</option>
-                                        <option value="已確認">已確認</option>
-                                        <option value="已結束">已結束</option>
-                                    </select><button class="btn btn-sm btn-primary" type="submit" value="儲存" @if($order_date->status=='未處理'||$order_date->status=='已結束') hidden @endif>儲存</button>
-
-                                @elseif($order_date->status=='已確認')
-                                    <select id="status" name="status" class="form-control">
-                                        <option value="已付款">已付款</option>
-                                        <option value="已確認" selected>已確認</option>
-                                        <option value="已結束">已結束</option>
-                                    </select><button class="btn btn-sm btn-primary" type="submit" value="儲存" @if($order_date->status=='未處理'||$order_date->status=='已結束') hidden @endif>儲存</button>
-
-                                @elseif($order_date->status!='已付款' && $order_date->status!='已確認')
-                                    {{$order_date->status}}
-                                @endif
-                            </form>
+                            {{$order->start_date}}
+                        </div>
+                        <div class="col-lg-1 col-xxl-2 mb-5">
+                            {{$order->end_date}}
+                        </div>
+                        <div class="col-lg-1 col-xxl-2 mb-5">
+                            {{ $account}}
                         </div>
                         <div class="col-lg-1 col-xxl-1 mb-5">
-                            {{--                <a href="#">刪除</a>--}}
-                            <form action="{{route('orders.destroy', $order_date->id)}}" method="POST" style="display: inline-block">
-                                @method('DELETE')
+                            {{ $order->status }}
+                        </div>
+                        <div class="col-lg-1 col-xxl-1 mb-5">
+                            <form action="{{route('orders.update', $order->id)}}" role="form" method="POST" style="display: inline-block">
+                                @method('PATCH')
                                 @csrf
-                                {{method_field('DELETE')}}
-                                {{csrf_field()}}
-                                <button class="btn btn-sm btn-danger" type="submit">取消</button>
+                                @if($order->status=='未處理')
+                                    <button class="btn btn-sm btn-danger" type="submit" value="已付款" name="status">已付款</button>
+                                @else
+                                    <button class="btn btn-sm btn-danger" type="submit" value="已付款" name="status" disabled>已付款</button>
+                                @endif
                             </form>
                             {{--                <a href="#">刪除</a>--}}
                         </div>

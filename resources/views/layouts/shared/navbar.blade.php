@@ -20,6 +20,7 @@
                     <li class="nav-item"><a class="nav-link{{ (request()->is('login'))? " active" : "" }}" aria-current="page" href="{{ route('login') }}">登入</a></li>
                     <li class="nav-item"><a class="nav-link{{ (request()->is('register'))? " active" : "" }}" aria-current="page" href="{{ route('register') }}">註冊</a></li>
                 @else
+                    <li class="nav-item"><a class="nav-link" aria-current="page" href="{{ route('orders.index') }}">訂單資料</a></li>
                     <li class="nav-item"><a class="nav-link" aria-current="page" href="{{ route('logout') }}">登出</a></li>
                 @endif
             </ul>

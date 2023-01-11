@@ -39,11 +39,9 @@
                                 <p class="mb-0">目前狀態：
                                     <select id="shelf_status" name="shelf_status" class="form-control" style="text-align: center" disabled>
                                         @if($data->shelf_status==0)
-                                            <option value="0">整理中</option>
+                                            <option value="0">不開放</option>
                                         @elseif($data->shelf_status==1)
                                             <option value="1">開放訂購</option>
-                                        @elseif($data->shelf_status==2)
-                                            <option value="2">已被訂購</option>
                                         @endif
                                     </select>
                                 </p>
